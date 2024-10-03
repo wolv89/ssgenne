@@ -1,9 +1,15 @@
 
 from textnode import TextNode
-from htmlnode import HTMLNode
+from htmlnode import *
 
-node = TextNode("This is a text node", "bold", "https://www.boot.dev")
+node = ParentNode(
+    "p",
+    [
+        LeafNode("b", "Bold text"),
+        LeafNode(None, "Normal text"),
+        LeafNode("i", "italic text"),
+        LeafNode(None, "Normal text"),
+    ],
+)
 
-hnode = HTMLNode("div", "Some text")
-
-print(hnode)
+print(node.to_html())
