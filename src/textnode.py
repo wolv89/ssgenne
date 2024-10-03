@@ -1,4 +1,5 @@
 
+from constants import *
 from htmlnode import LeafNode
 
 class TextNode:
@@ -21,16 +22,16 @@ class TextNode:
 
 
 def text_node_to_html_node(text_node):
-	if text_node.text_type == "text":
+	if text_node.text_type == TT_TEXT:
 		return LeafNode("", text_node.text)
-	if text_node.text_type == "bold":
+	if text_node.text_type == TT_BOLD:
 		return LeafNode("b", text_node.text)
-	if text_node.text_type == "italic":
+	if text_node.text_type == TT_ITALIC:
 		return LeafNode("i", text_node.text)
-	if text_node.text_type == "code":
+	if text_node.text_type == TT_CODE:
 		return LeafNode("code", text_node.text)
-	if text_node.text_type == "link":
+	if text_node.text_type == TT_LINK:
 		return LeafNode("a", text_node.text, {"href": text_node.url})
-	if text_node.text_type == "image":
+	if text_node.text_type == TT_IMG:
 		return LeafNode("img", "", {"src": text_node.url, "alt": text_node.text})
 	raise Exception("invalid text type")

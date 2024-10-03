@@ -1,15 +1,11 @@
 
+from constants import *
+from parser import *
 from textnode import TextNode
-from htmlnode import *
 
-node = ParentNode(
-    "p",
-    [
-        LeafNode("b", "Bold text"),
-        LeafNode(None, "Normal text"),
-        LeafNode("i", "italic text"),
-        LeafNode(None, "Normal text"),
-    ],
-)
+sample = "This is **text** with an *italic* word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
 
-print(node.to_html())
+nodes = text_to_text_nodes(sample)
+
+for node in nodes:
+	print(node)
