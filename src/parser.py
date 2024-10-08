@@ -5,6 +5,57 @@ from constants import *
 from textnode import TextNode
 
 
+def markdown_to_blocks(markdown):
+	raw_blocks = markdown.split("\n\n")
+	cleaned_blocks = []
+	for block in raw_blocks:
+		if block == "":
+			continue
+		block = block.strip()
+		cleaned_blocks.append(block)
+	return cleaned_blocks
+
+
+def block_to_block_type(block):
+	
+	# Heading
+	if re.match(r"[#]{1,6} ", block):
+		return "heading"
+
+	# Code
+	if block[:3] == "```" and block[-3:] == "```":
+		return "code"
+
+	lines = block.split("\n")
+
+	# Quote
+	if lines[0][0] == ">":
+		for line in lines:
+			if line[0] != ">":
+				return "paragraph"
+		return "quote"
+
+	# Unordered List
+	if lines[0][:2] == "- " or lines[0][:2] == "* ":
+		dot = lines[0][:2]
+		for line in lines:
+			if line[:2] != dot:
+				return "paragraph"
+		return "unordered_list"
+
+	if lines[0][:3] == "1. ":
+		counter = 1
+		for line in lines:
+			lead = re.match(r"([0-9]+)\. ", line)
+			if not lead:
+				return "paragraph"
+			if int(lead.group(1)) != counter:
+				return "paragraph"
+			counter += 1
+		return "ordered_list"
+
+	return "paragraph"
+
 
 
 def text_to_text_nodes(text):
