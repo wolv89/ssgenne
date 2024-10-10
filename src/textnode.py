@@ -20,10 +20,13 @@ class TextNode:
 	def __repr__(self):
 		return f"TextNode({self.text}, {self.text_type}, {self.url})"
 
+	def to_html(self):
+		return text_node_to_html_node(self).to_html()
+
 
 def text_node_to_html_node(text_node):
 	if text_node.text_type == TT_TEXT:
-		return LeafNode("", text_node.text)
+		return LeafNode(None, text_node.text)
 	if text_node.text_type == TT_BOLD:
 		return LeafNode("b", text_node.text)
 	if text_node.text_type == TT_ITALIC:
